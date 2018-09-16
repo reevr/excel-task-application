@@ -1,4 +1,4 @@
-var socket = io('http://localhost:3000');
+var socket = io('https://absentia-excel-app.herokuapp.com');
 var uploader = new SocketIOFileClient(socket);
 var form = document.getElementById('form');
 
