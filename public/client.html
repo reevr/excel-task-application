@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>
+                Absentia Excel file app.
+        </title>
+        <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <h1 class="text-center"> Excel Form App</h1>
+        <form class="card p-2" id="form">
+            <br>
+            <h2>Upload Excel File</h2>
+            <br>
+            <div class="input-group">
+                <input type="file" id="file" class="form-control" placeholder="Add file">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary">Submit</button>
+                </div>
+            </div>
+            <br>
+            <br>
+        </form>
+        <div class="container" id="output-wrapper">
+            <a id="output" href="#">Click here to download output file</a>
+        </div>
+        <script src="socket.io.js"></script>
+        <script src="socket.io-file-client.js"></script>
+        <script src="client-app.js"></script>
+    </body>
+</html>
