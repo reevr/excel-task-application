@@ -1,6 +1,7 @@
 const SocketIOFile = require('socket.io-file');
 const path = require('path');
 const Excel = require('exceljs');
+const Async = require('async');
 
 const socketController = (socket) => {
     console.log('client connected');
@@ -26,11 +27,34 @@ function sendOutputFileLink(socket, outputFileName) {
 } 
 
 async function processFile(inputFileName) {
-    const workBook = new Excel.Workbook();
+    let workBook = new Excel.Workbook();
     const phoneNumbers = await getPhoneNumbers(workBook, inputFileName);
-    const regions = nanp.compareNumber([9002, 8000, 7000]);
-    setRegionsForNumbers(regions, workBook);
+    workBook = await getWorkbookWithRegionsByPhoneNumber(splitByChunks(phoneNumbers), workBook);
     return saveOutputFile(workBook);
+}
+
+function getWorkbookWithRegionsByPhoneNumber(chunkedPhoneNumberList, workBook) {
+    const queue = Async.queue((nanp, done) => done(), 3); 
+    return new Promise((resolve, reject) => {
+        queue.drain = () => resolve(workBook);
+        chunkedPhoneNumberList.forEach((phoneNumbersList) => {
+            queue.push(nanp, (err) => {
+                if (err) { reject(err); }
+                const regions = nanp.compareNumber(phoneNumbersList);
+                setRegionsForNumbers(regions, workBook);
+            });
+        });
+    });
+}
+
+function splitByChunks(array) {
+    const chunked_arr = [], size = 50;
+    let index = 0;
+    while (index < array.length) {
+      chunked_arr.push(array.slice(index, size + index));
+      index += size;
+    }
+    return chunked_arr;
 }
 
 async function getPhoneNumbers(workBook, inputFileName) {
